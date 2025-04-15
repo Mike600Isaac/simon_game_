@@ -4,14 +4,16 @@
 //    alert("am loading in a meeting.....")
 // })
 var gamePattern = [];
-
 var buttonColour = ["green", "red", "yellow", "blue",];
-
-
 console.log(gamePattern);
+
+var level = 0;
+var started = false;
 
 
 function nextSequence() {
+
+    level++;
 
     var randNum = Math.floor(Math.random() * 4);
     var randomChosenColour = buttonColour[randNum];
@@ -34,6 +36,7 @@ $(".btn").click(function () {
     // console.log(userClickedPattern);
     playSound(userChosenColour);
     animatePress(userChosenColour);
+    checkAnswer(userChosenColour);
 })
 
 function playSound(name) {
@@ -42,11 +45,28 @@ function playSound(name) {
 }
 
 function animatePress(currentColour) {
-    $(".btn").addClass("pressed")
+    $("#" + currentColour).addClass("pressed")
+    setTimeout(
+        function () {
+            $("#" + currentColour).removeClass("pressed")
+        }, 100
+    );
+}
+
+$(document).keypress(function () {
+    if(!started) {
+        $("#level-title").text("Level " + level);
+        nextSequence();
+        started = true;
+    }
+});
+
+function checkAnswer(check) {
+    if(check === ) {
+        console.log("success!");
+    } else {
+        console.log("wrong!");
+    }
 }
 
 
-function animatePressRemove() {
-    $(".btn").removeClass("pressed")
-}
-setInterval(animatePressRemove, 100);
